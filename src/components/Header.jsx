@@ -44,10 +44,11 @@ const Header = () => {
         <div>
           <Link className='flex items-center gap-2' to={'/cart'}>
             <div className='relative'>
-              <span className='bg-yellow-400 absolute -top-3 rounded-full px-1 -right-2 text-sm'>
-                {itemCount}{' '}
-              </span>
-
+              {itemCount > 0 && (
+                <span className='bg-yellow-400 absolute -top-3 rounded-full px-1 -right-2 text-sm'>
+                  {itemCount}
+                </span>
+              )}
               <AiOutlineShoppingCart size={20} />
             </div>
             {/* {itemCount && <span className='bg-black absolute top-0 right-0'>{itemCount} </span>} */}

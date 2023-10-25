@@ -4,7 +4,8 @@ const validate = (email, password) => {
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
 
   if (!isEmailValid) return 'Please enter a valid email';
-  if (!isPasswordValid) return 'Please enter a valid password';
+  if (!isPasswordValid)
+    return 'Password should contain at least one number, special character and uppercase letter';
 
   return null;
 };
