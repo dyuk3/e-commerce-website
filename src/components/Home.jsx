@@ -1,19 +1,31 @@
-import React from 'react';
-import { AiOutlineShoppingCart } from 'react-icons/ai';
+import React, { useEffect } from 'react';
+import Header from './Header';
+import { Outlet, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../utils/firebase';
+import { useDispatch } from 'react-redux';
+import { addUser, removeUser } from '../features/userSlice';
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    // firebase function to  handele the signing in and signing out of user
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const { uid, displayName, email } = user;
+
+        dispatch(addUser({ uid: uid, displayName: displayName, userEmail: email }));
+      } else {
+        dispatch(removeUser());
+      }
+    });
+  }, []);
+
   return (
-    <div className='bg-blue-500 px-20 h-20  flex items-center justify-between text-white'>
-      <div>
-        <h1 className='text-3xl'>E-Commerce</h1>
-      </div>
-      <div className='flex gap-4'>
-        <button className='bg-black rounded text-white p-2'>Login/Signup</button>
-        <div className='flex items-center gap-2'>
-          <AiOutlineShoppingCart />
-          <button>Your Cart</button>
-        </div>
-      </div>
+    <div>
+      <Header />
+      <Outlet />
     </div>
   );
 };
